@@ -280,7 +280,7 @@ class SvgDrawingPlayground {
 
     this._elements.forEach(el => {
       // 원본 스타일 저장
-      const origFill = el.getAttribute('fill') || el.style.fill || 'none';
+      const origFill = el.getAttribute('fill') || getComputedStyle(el).fill || el.style.fill || 'none';
       const origStroke = el.getAttribute('stroke') || el.style.stroke || '#333';
       const origStrokeWidth = el.getAttribute('stroke-width') || el.style.strokeWidth || '1';
 

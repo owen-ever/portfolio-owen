@@ -97,7 +97,7 @@ export function useSvgDrawing(options = {}) {
     stateRef.current.elements = elements;
 
     elements.forEach(el => {
-      const origFill = el.getAttribute('fill') || el.style.fill || 'none';
+      const origFill = el.getAttribute('fill') || getComputedStyle(el).fill || el.style.fill || 'none';
       const origStroke = el.getAttribute('stroke') || el.style.stroke || '#333';
       const origStrokeWidth = el.getAttribute('stroke-width') || el.style.strokeWidth || '1';
       el.setAttribute('data-orig-fill', origFill);
