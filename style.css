@@ -1,0 +1,297 @@
+/* ================================================================
+   SVG Drawing Playground — 스타일시트
+   ================================================================ */
+
+/* ─── CSS 변수 ─────────────────────────────────────────────────── */
+:root {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --border: #e0e0e0;
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --danger: #ff3b30;
+  --success: #34c759;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* ─── 리셋 & 기본 ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ─── 레이아웃 ──────────────────────────────────────────────────── */
+.app-header {
+  width: 100%;
+  max-width: 900px;
+  padding: 36px 24px 0;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.app-header p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.app-main {
+  width: 100%;
+  max-width: 900px;
+  padding: 28px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─── 업로드 영역 ───────────────────────────────────────────────── */
+.upload-area {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 36px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  user-select: none;
+}
+
+.upload-area:hover,
+.upload-area.drag-over {
+  border-color: var(--accent);
+  background: #f0f7ff;
+}
+
+.upload-area .upload-icon {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.upload-area .upload-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.upload-area .upload-hint {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* 숨겨진 파일 인풋 */
+#file-input {
+  display: none;
+}
+
+/* ─── 컨트롤 버튼 영역 ──────────────────────────────────────────── */
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+  outline: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn-secondary {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #d0d0d5;
+}
+
+/* ─── 상태 메시지 ───────────────────────────────────────────────── */
+.status-bar {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.status-bar.status-success {
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.status-bar.status-drawing {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.status-bar.status-ready {
+  background: #f5f3ff;
+  color: #5b21b6;
+  border-color: #ddd6fe;
+}
+
+/* 스피너 */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── SVG 미리보기 영역 ─────────────────────────────────────────── */
+.preview-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 20px;
+  position: relative;
+}
+
+/* 빈 상태 안내 */
+.preview-empty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+  pointer-events: none;
+  select: none;
+}
+
+.preview-empty .empty-icon {
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+  display: block;
+  opacity: 0.5;
+}
+
+/* SVG 컨테이너 */
+#svg-container {
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#svg-container svg {
+  max-width: 100%;
+  max-height: 500px;
+  display: block;
+}
+
+/* ─── SVG 인터랙션 (.is-ready 상태) ─────────────────────────────── */
+
+/*
+ * .is-ready 가 SVG 루트에 추가되면
+ * 모든 지오메트리 요소에 hover 인터랙션 활성화
+ * [EXTEND] 원하는 요소 셀렉터로 범위 조정 가능
+ */
+#svg-container svg.is-ready path,
+#svg-container svg.is-ready rect,
+#svg-container svg.is-ready circle,
+#svg-container svg.is-ready ellipse,
+#svg-container svg.is-ready polygon,
+#svg-container svg.is-ready polyline,
+#svg-container svg.is-ready line {
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+#svg-container svg.is-ready path:hover,
+#svg-container svg.is-ready rect:hover,
+#svg-container svg.is-ready circle:hover,
+#svg-container svg.is-ready ellipse:hover,
+#svg-container svg.is-ready polygon:hover,
+#svg-container svg.is-ready polyline:hover,
+#svg-container svg.is-ready line:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.08) drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
+/* ─── 반응형 ────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
