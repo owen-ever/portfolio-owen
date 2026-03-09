@@ -1,0 +1,38 @@
+.container {
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container > :global(svg) {
+  max-width: 100%;
+  max-height: 500px;
+  display: block;
+}
+
+.container > :global(svg.is-ready path),
+.container > :global(svg.is-ready rect),
+.container > :global(svg.is-ready circle),
+.container > :global(svg.is-ready ellipse),
+.container > :global(svg.is-ready polygon),
+.container > :global(svg.is-ready polyline),
+.container > :global(svg.is-ready line) {
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.container > :global(svg.is-ready path:hover),
+.container > :global(svg.is-ready rect:hover),
+.container > :global(svg.is-ready circle:hover),
+.container > :global(svg.is-ready ellipse:hover),
+.container > :global(svg.is-ready polygon:hover),
+.container > :global(svg.is-ready polyline:hover),
+.container > :global(svg.is-ready line:hover) {
+  transform: translateY(-4px);
+  filter: brightness(1.08) drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
